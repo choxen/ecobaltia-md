@@ -1,26 +1,17 @@
 <?php
 
+use App\Http\Controllers\Api\ApiBooksController;
+use App\Http\Controllers\BookHistoryRecordsController;
+use App\Http\Controllers\BooksController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', BooksController::class . '@index')->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('/books/markAsTaken/{book}', BookHistoryRecordsController::class . '@markAsTaken')->middleware(['auth'])->name('markAsTaken');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -28,4 +19,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

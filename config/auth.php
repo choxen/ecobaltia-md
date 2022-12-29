@@ -108,4 +108,6 @@ return [
 
     'password_timeout' => 10800,
 
+    'api_auth_token' => env('PRIVATE_API_AUTH_TOKEN'),
+
 ];
